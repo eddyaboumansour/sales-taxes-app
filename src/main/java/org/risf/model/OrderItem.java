@@ -1,12 +1,20 @@
 package org.risf.model;
 
-public record OrderItem(Product product, int quantity) {
+public record OrderItem(ProductTaxIncluded productTaxIncluded, int quantity) {
     public OrderItem {
-        if (product == null) {
+        if (productTaxIncluded == null) {
             throw new IllegalArgumentException("Product cannot be null");
         }
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than 0");
         }
+    }
+
+    public double getOrderItemTax() {
+        return productTaxIncluded().tax() * quantity;
+    }
+
+    public double getOrderItemTotalPriceTaxIncluded() {
+        return productTaxIncluded().getPriceWithTax() * quantity;
     }
 }

@@ -11,9 +11,9 @@ public class Receipt {
     private double totalPrice = 0.0;
     private final List<OrderItem> orderItems = new ArrayList<>();
 
-    public void addItem(OrderItem orderItem, double taxes, double price) {
+    public void addItem(OrderItem orderItem) {
         orderItems.add(orderItem);
-        totalTaxes += taxes;
-        totalPrice += price;
+        totalTaxes += orderItem.getOrderItemTax();
+        totalPrice += orderItem.getOrderItemTotalPriceTaxIncluded();
     }
 }

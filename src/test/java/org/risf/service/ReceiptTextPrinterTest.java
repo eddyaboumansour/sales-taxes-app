@@ -7,10 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.risf.model.OrderItem;
-import org.risf.model.Product;
-import org.risf.model.ProductType;
-import org.risf.model.Receipt;
+import org.risf.model.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -55,8 +52,8 @@ class ReceiptTextPrinterTest {
     @Test
     void testPrintReceipt() {
         // Given
-        OrderItem item1 = new OrderItem(new Product("book", ProductType.BOOK, 12.49, false), 1);
-        OrderItem item2 = new OrderItem(new Product("music CD", ProductType.OTHER, 14.99, false), 2);
+        OrderItem item1 = new OrderItem(new ProductTaxIncluded(new Product("book", ProductType.BOOK, 12.49, false), 0), 1);
+        OrderItem item2 = new OrderItem(new ProductTaxIncluded(new Product("music CD", ProductType.OTHER, 14.99, false), 0), 2);
         when(receipt.getOrderItems()).thenReturn(List.of(item1, item2));
         when(receipt.getTotalTaxes()).thenReturn(1.50);
         when(receipt.getTotalPrice()).thenReturn(29.83);

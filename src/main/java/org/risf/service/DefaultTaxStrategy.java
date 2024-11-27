@@ -1,6 +1,7 @@
 package org.risf.service;
 
-import org.risf.model.OrderItem;
+import org.risf.model.Product;
+import org.risf.model.ProductTaxIncluded;
 import org.risf.model.ProductType;
 
 public class DefaultTaxStrategy implements TaxCalculationStrategy {
@@ -11,29 +12,34 @@ public class DefaultTaxStrategy implements TaxCalculationStrategy {
     public static final double IMPORT_DUTY = 0.05;
 
     @Override
-    public double calculateTax(OrderItem item) {
+    public ProductTaxIncluded addTaxesOnProduct(Product product) {
+        return new ProductTaxIncluded(product, calculateTax(product));
+
+    }
+
+    private double calculateTax(Product product) {
         double taxRate = INITIAL_TAX_RATE;
 
-        taxRate = addBasicTaxIfExists(item, taxRate);
-        taxRate = addImportDutyIfExists(item, taxRate);
+        taxRate = addBasicTaxIfExists(product, taxRate);
+        taxRate = addImportDutyIfExists(product, taxRate);
 
-        double tax = calculateItemTax(item, taxRate);
+        double tax = calculateItemTax(product, taxRate);
         return roundToNearest(tax);
     }
 
-    private static double calculateItemTax(OrderItem item, double taxRate) {
-        return taxRate * item.product().price();
+    private static double calculateItemTax(Product product, double taxRate) {
+        return taxRate * product.price();
     }
 
-    private static double addBasicTaxIfExists(OrderItem item, double taxRate) {
-        if (item.product().type() == ProductType.OTHER) {
+    private static double addBasicTaxIfExists(Product product, double taxRate) {
+        if (product.type() == ProductType.OTHER) {
             taxRate += BASIC_TAX_RATE;
         }
         return taxRate;
     }
 
-    private static double addImportDutyIfExists(OrderItem item, double taxRate) {
-        if (item.product().isImported()) {
+    private static double addImportDutyIfExists(Product product, double taxRate) {
+        if (product.isImported()) {
             taxRate += IMPORT_DUTY;
         }
         return taxRate;

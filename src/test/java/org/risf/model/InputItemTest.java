@@ -4,21 +4,22 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrderItemTest {
+class InputItemTest {
 
     @Test
     void testValidOrderItem() {
-        OrderItem orderItem = new OrderItem(getProductTaxIncluded(), 2);
+        Product product = new Product("book", ProductType.BOOK, 12.49, false);
+        InputItem inputItem = new InputItem(product, 1);
 
-        assertNotNull(orderItem);
-        assertEquals(2, orderItem.getOrderItemTax());
-        assertEquals(26.98, orderItem.getOrderItemTotalPriceTaxIncluded());
+        assertNotNull(inputItem);
     }
 
     @Test
     void testOrderItemWithZeroQuantity() {
+        Product product = new Product("book", ProductType.BOOK, 12.49, false);
+
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new OrderItem(getProductTaxIncluded(), 0);
+            new InputItem(product, 0);
         });
 
         assertEquals("Quantity must be greater than 0", exception.getMessage());
@@ -27,13 +28,10 @@ class OrderItemTest {
     @Test
     void testOrderItemWithNullProduct() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new OrderItem(null, 1);
+            new InputItem(null, 1);
         });
 
         assertEquals("Product cannot be null", exception.getMessage());
     }
 
-    private static ProductTaxIncluded getProductTaxIncluded() {
-        return new ProductTaxIncluded(new Product("book", ProductType.BOOK, 12.49, false), 1.0);
-    }
 }

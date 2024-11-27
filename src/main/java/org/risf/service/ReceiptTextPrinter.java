@@ -3,7 +3,7 @@ package org.risf.service;
 import org.risf.model.OrderItem;
 import org.risf.model.Receipt;
 
-public class ReceiptTextPrinter implements ReceiptPrinter{
+public class ReceiptTextPrinter implements ReceiptPrinter {
     private static final String LINE_FORMAT = "%d %s: %.2f";
 
     @Override

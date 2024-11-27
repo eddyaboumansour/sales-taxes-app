@@ -33,5 +33,4 @@ class ProductTest {
 
         assertEquals("Product type cannot be null", exception.getMessage());
     }
-
 }

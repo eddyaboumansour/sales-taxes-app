@@ -11,7 +11,7 @@ class OrderItemTest {
         OrderItem orderItem = new OrderItem(getProductTaxIncluded(), 2);
 
         assertNotNull(orderItem);
-        assertEquals(2, orderItem.getOrderItemTax());
+        assertEquals(2, orderItem.getOrderItemTotalTax());
         assertEquals(26.98, orderItem.getOrderItemTotalPriceTaxIncluded());
     }
 

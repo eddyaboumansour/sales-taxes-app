@@ -13,7 +13,7 @@ public class Receipt {
 
     public void addItem(OrderItem orderItem) {
         orderItems.add(orderItem);
-        totalTaxes += orderItem.getOrderItemTax();
+        totalTaxes += orderItem.getOrderItemTotalTax();
         totalPrice += orderItem.getOrderItemTotalPriceTaxIncluded();
     }
 }

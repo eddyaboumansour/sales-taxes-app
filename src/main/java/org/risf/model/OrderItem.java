@@ -10,7 +10,7 @@ public record OrderItem(ProductTaxIncluded productTaxIncluded, int quantity) {
         }
     }
 
-    public double getOrderItemTax() {
+    public double getOrderItemTotalTax() {
         return productTaxIncluded().tax() * quantity;
     }
 
